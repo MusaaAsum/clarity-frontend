@@ -1,0 +1,12 @@
+{
+  "name": "clarity-frontend",
+  "version": "1.0.0",
+  "description": "Clarity - Application de coaching pour jeunes adultes",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Build complete'",
+    "start": "echo 'Ready to serve'"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
