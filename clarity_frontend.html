@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clarity - Sortez de l'impasse</title>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -21,46 +18,23 @@
             color: #333;
         }
 
-        .app-container {
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-        }
-
-        .header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .header h1 {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 2rem;
-            display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
         }
 
         .card {
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .hero-section {
+            padding: 3rem;
             text-align: center;
-            margin-bottom: 3rem;
+            width: 100%;
         }
 
         .hero-title {
@@ -80,31 +54,9 @@
             line-height: 1.4;
         }
 
-        .cta-button {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
-        }
-
-        .form-container {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
         .form-group {
             margin-bottom: 1.5rem;
+            text-align: left;
         }
 
         .form-label {
@@ -144,157 +96,40 @@
             border-color: #667eea;
         }
 
-        .submit-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 50px;
             padding: 1rem 2rem;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            width: 100%;
             transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+            width: 100%;
+            margin-bottom: 1rem;
         }
 
-        .submit-button:hover {
-            transform: translateY(-1px);
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
-        .submit-button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
+        .btn-secondary:hover {
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
         }
 
-        .dashboard {
-            text-align: center;
+        .hidden {
+            display: none;
         }
 
-        .dashboard-title {
-            font-size: 2rem;
-            color: #333;
-            margin-bottom: 2rem;
-        }
-
-        .session-card {
-            background: linear-gradient(135deg, #f8f9ff 0%, #e8f4fd 100%);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            text-align: left;
-            border: 1px solid #e0e8ff;
-        }
-
-        .session-title {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .session-status {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .status-completed {
-            color: #22c55e;
-            font-weight: 600;
-        }
-
-        .status-progress {
-            color: #f59e0b;
-            font-weight: 600;
-        }
-
-        .question-container {
-            margin-bottom: 2rem;
-        }
-
-        .question-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 1rem;
-        }
-
-        .question-counter {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-        }
-
-        .matrix {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .matrix-quadrant {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 1rem;
-            border-left: 4px solid;
-        }
-
-        .quadrant-1 {
-            border-left-color: #dc3545;
-        }
-
-        .quadrant-2 {
-            border-left-color: #fd7e14;
-        }
-
-        .quadrant-3 {
-            border-left-color: #6c757d;
-        }
-
-        .quadrant-4 {
-            border-left-color: #28a745;
-        }
-
-        .quadrant-title {
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .quadrant-items {
-            list-style: none;
-            font-size: 0.85rem;
-        }
-
-        .quadrant-items li {
-            margin-bottom: 0.25rem;
-            color: #666;
-        }
-
-        .actions-section {
-            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
-            border-radius: 15px;
-            padding: 1.5rem;
-            border-left: 4px solid #28a745;
-        }
-
-        .actions-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #155724;
-            margin-bottom: 1rem;
-        }
-
-        .action-item {
-            background: white;
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 0.5rem;
-            border-left: 3px solid #28a745;
-            font-size: 0.95rem;
-        }
-
-        .error-message {
+        .error {
             background: #fee;
             color: #c33;
             padding: 1rem;
@@ -303,7 +138,7 @@
             border-left: 4px solid #c33;
         }
 
-        .success-message {
+        .success {
             background: #efe;
             color: #363;
             padding: 1rem;
@@ -312,760 +147,400 @@
             border-left: 4px solid #363;
         }
 
-        .back-button {
+        .back-btn {
             background: #6c757d;
             color: white;
             border: none;
             border-radius: 10px;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
             cursor: pointer;
-            margin-right: 1rem;
+            margin-bottom: 1rem;
+            display: inline-block;
         }
 
-        .back-button:hover {
-            background: #5a6268;
+        .status-text {
+            color: #666;
+            font-style: italic;
+            margin: 1rem 0;
         }
 
-        .logout-button {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
+        .api-test {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: monospace;
             font-size: 0.9rem;
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 1rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .matrix {
-                grid-template-columns: 1fr;
-            }
-
-            .header {
-                padding: 1rem;
-            }
-
-            .header h1 {
-                font-size: 1.2rem;
-            }
         }
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div class="container">
+        <div class="card">
+            <div id="messages"></div>
+            
+            <!-- Page d'accueil -->
+            <div id="home-page">
+                <h1 class="hero-title">Sortez de l'impasse</h1>
+                <p class="hero-subtitle">
+                    Retrouvez votre pouvoir d'action en distinguant ce que vous avez hérité 
+                    de ce que vous pouvez façonner
+                </p>
+                
+                <!-- Test API -->
+                <div class="api-test">
+                    <strong>Test de connexion API :</strong>
+                    <div id="api-status">Testing...</div>
+                </div>
+                
+                <button class="btn" onclick="showRegister()">Commencer maintenant</button>
+                <button class="btn btn-secondary" onclick="showLogin()">Se connecter</button>
+            </div>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+            <!-- Inscription -->
+            <div id="register-page" class="hidden">
+                <button class="back-btn" onclick="showHome()">← Retour</button>
+                <h2 style="margin-bottom: 2rem; color: #333;">Créer votre compte</h2>
+                
+                <form onsubmit="register(event)">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="reg-email" required placeholder="votre@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mot de passe</label>
+                        <input type="password" class="form-input" id="reg-password" required placeholder="Minimum 6 caractères" minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Créer mon compte</button>
+                </form>
+            </div>
 
-        // Configuration API
-        const API_BASE_URL = 'https://clarity-backend-production-efc1.up.railway.app';
+            <!-- Connexion -->
+            <div id="login-page" class="hidden">
+                <button class="back-btn" onclick="showHome()">← Retour</button>
+                <h2 style="margin-bottom: 2rem; color: #333;">Connexion</h2>
+                
+                <form onsubmit="login(event)">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="login-email" required placeholder="votre@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mot de passe</label>
+                        <input type="password" class="form-input" id="login-password" required placeholder="Votre mot de passe">
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Se connecter</button>
+                </form>
+            </div>
+
+            <!-- Dashboard -->
+            <div id="dashboard-page" class="hidden">
+                <h2 style="margin-bottom: 2rem; color: #333;">Tableau de bord</h2>
+                <button class="btn" onclick="startNewSession()">Nouvelle session</button>
+                <button class="btn btn-secondary" onclick="logout()">Déconnexion</button>
+                <div id="sessions-list"></div>
+            </div>
+
+            <!-- Nouvelle session -->
+            <div id="new-session-page" class="hidden">
+                <button class="back-btn" onclick="showDashboard()">← Retour</button>
+                <h2 style="margin-bottom: 2rem; color: #333;">Nouvelle session</h2>
+                
+                <form onsubmit="createSession(event)">
+                    <div class="form-group">
+                        <label class="form-label">Décrivez votre situation</label>
+                        <textarea class="form-textarea" id="problem-description" required 
+                                placeholder="Exemple : Je n'arrive pas à garder un copain plus de 3 mois, je me sens toujours rejeté après quelques semaines..."
+                                minlength="10"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Commencer l'analyse</button>
+                </form>
+            </div>
+
+            <!-- Session en cours -->
+            <div id="session-page" class="hidden">
+                <button class="back-btn" onclick="showDashboard()">← Annuler</button>
+                <div id="session-content"></div>
+            </div>
+
+            <!-- Résultats -->
+            <div id="results-page" class="hidden">
+                <h2 style="margin-bottom: 2rem; color: #333;">Votre analyse</h2>
+                <div id="results-content"></div>
+                <button class="btn" onclick="showDashboard()">Retour au tableau de bord</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE = 'https://clarity-backend-production-efc1.up.railway.app';
+        let currentUser = null;
+        let currentSession = null;
 
         // Utilitaires
-        const api = {
-            async request(endpoint, options = {}) {
-                const token = localStorage.getItem('clarity_token');
-                const headers = {
-                    'Content-Type': 'application/json',
-                    ...(token && { Authorization: `Bearer ${token}` }),
-                    ...options.headers
-                };
+        function showMessage(message, type = 'error') {
+            const div = document.getElementById('messages');
+            div.innerHTML = `<div class="${type}">${message}</div>`;
+            setTimeout(() => div.innerHTML = '', 5000);
+        }
 
-                try {
-                    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-                        ...options,
-                        headers
-                    });
+        function showPage(pageId) {
+            document.querySelectorAll('[id$="-page"]').forEach(page => {
+                page.classList.add('hidden');
+            });
+            document.getElementById(pageId).classList.remove('hidden');
+        }
 
-                    if (!response.ok) {
-                        const error = await response.json().catch(() => ({ detail: 'Erreur réseau' }));
-                        throw new Error(error.detail || 'Erreur inconnue');
-                    }
+        function showHome() { showPage('home-page'); }
+        function showRegister() { showPage('register-page'); }
+        function showLogin() { showPage('login-page'); }
+        function showDashboard() { showPage('dashboard-page'); }
 
-                    return await response.json();
-                } catch (error) {
-                    console.error('API Error:', error);
-                    throw error;
+        // Test API au chargement
+        async function testAPI() {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                document.getElementById('api-status').innerHTML = 
+                    `<span style="color: green;">✓ Connected</span> - ${data.status}`;
+            } catch (error) {
+                document.getElementById('api-status').innerHTML = 
+                    `<span style="color: red;">✗ Error:</span> ${error.message}`;
+            }
+        }
+
+        // Authentification
+        async function register(event) {
+            event.preventDefault();
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Erreur inscription');
                 }
-            },
 
-            async register(email, password) {
-                return this.request('/auth/register', {
+                const data = await response.json();
+                currentUser = { token: data.access_token };
+                localStorage.setItem('clarity_token', data.access_token);
+                showMessage('Compte créé avec succès !', 'success');
+                showDashboard();
+            } catch (error) {
+                showMessage(error.message);
+            }
+        }
+
+        async function login(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
                     method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
                 });
-            },
 
-            async login(email, password) {
-                return this.request('/auth/login', {
-                    method: 'POST',
-                    body: JSON.stringify({ email, password })
-                });
-            },
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Erreur connexion');
+                }
 
-            async startSession(problemDescription) {
-                return this.request('/sessions/start', {
+                const data = await response.json();
+                currentUser = { token: data.access_token };
+                localStorage.setItem('clarity_token', data.access_token);
+                showMessage('Connexion réussie !', 'success');
+                showDashboard();
+            } catch (error) {
+                showMessage(error.message);
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('clarity_token');
+            showHome();
+        }
+
+        // Sessions
+        function startNewSession() {
+            showPage('new-session-page');
+        }
+
+        async function createSession(event) {
+            event.preventDefault();
+            const problemDescription = document.getElementById('problem-description').value;
+
+            try {
+                const response = await fetch(`${API_BASE}/sessions/start`, {
                     method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentUser.token}`
+                    },
                     body: JSON.stringify({ problem_description: problemDescription })
                 });
-            },
 
-            async respondToQuestion(sessionId, questionKey, response) {
-                return this.request(`/sessions/${sessionId}/respond`, {
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Erreur création session');
+                }
+
+                const data = await response.json();
+                currentSession = {
+                    id: data.session_id,
+                    questions: data.questions,
+                    currentIndex: 0,
+                    responses: []
+                };
+
+                showSessionQuestion();
+            } catch (error) {
+                showMessage(error.message);
+            }
+        }
+
+        function showSessionQuestion() {
+            if (currentSession.currentIndex >= currentSession.questions.length) {
+                completeSession();
+                return;
+            }
+
+            const question = currentSession.questions[currentSession.currentIndex];
+            const progress = ((currentSession.currentIndex + 1) / currentSession.questions.length) * 100;
+
+            document.getElementById('session-content').innerHTML = `
+                <div style="background: #e0e8ff; height: 4px; border-radius: 2px; margin-bottom: 2rem;">
+                    <div style="background: #667eea; height: 100%; width: ${progress}%; transition: width 0.3s ease;"></div>
+                </div>
+                <p style="color: #666; margin-bottom: 1rem;">Question ${currentSession.currentIndex + 1} sur ${currentSession.questions.length}</p>
+                <h3 style="margin-bottom: 1.5rem; color: #333;">${question.text}</h3>
+                <form onsubmit="submitAnswer(event)">
+                    <div class="form-group">
+                        <textarea class="form-textarea" id="answer" required placeholder="Votre réponse..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">
+                        ${currentSession.currentIndex === currentSession.questions.length - 1 ? 'Terminer l\'analyse' : 'Question suivante'}
+                    </button>
+                </form>
+            `;
+
+            showPage('session-page');
+        }
+
+        async function submitAnswer(event) {
+            event.preventDefault();
+            const answer = document.getElementById('answer').value;
+            const question = currentSession.questions[currentSession.currentIndex];
+
+            try {
+                const response = await fetch(`${API_BASE}/sessions/${currentSession.id}/respond`, {
                     method: 'POST',
-                    body: JSON.stringify({ question_key: questionKey, response })
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentUser.token}`
+                    },
+                    body: JSON.stringify({ 
+                        question_key: question.key, 
+                        response: answer 
+                    })
                 });
-            },
 
-            async completeSession(sessionId) {
-                return this.request(`/sessions/${sessionId}/complete`, {
-                    method: 'POST'
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Erreur enregistrement réponse');
+                }
+
+                currentSession.responses.push({ questionKey: question.key, response: answer });
+                currentSession.currentIndex++;
+                showSessionQuestion();
+            } catch (error) {
+                showMessage(error.message);
+            }
+        }
+
+        async function completeSession() {
+            try {
+                const response = await fetch(`${API_BASE}/sessions/${currentSession.id}/complete`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${currentUser.token}`
+                    }
                 });
-            },
 
-            async getHistory() {
-                return this.request('/sessions/history');
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Erreur finalisation session');
+                }
+
+                const data = await response.json();
+                showResults(data.analysis);
+            } catch (error) {
+                showMessage(error.message);
+            }
+        }
+
+        function showResults(analysis) {
+            document.getElementById('results-content').innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: #fee; border-radius: 10px; padding: 1rem; border-left: 4px solid #dc3545;">
+                        <h4 style="margin-bottom: 0.5rem; color: #721c24;">Hérité + Non changeable</h4>
+                        <ul style="list-style: none; font-size: 0.9rem;">
+                            ${analysis.inherited_fixed.length ? analysis.inherited_fixed.map(item => `<li>• ${item}</li>`).join('') : '<li>Aucun élément</li>'}
+                        </ul>
+                    </div>
+                    <div style="background: #fff3cd; border-radius: 10px; padding: 1rem; border-left: 4px solid #fd7e14;">
+                        <h4 style="margin-bottom: 0.5rem; color: #856404;">Hérité + Transformable</h4>
+                        <ul style="list-style: none; font-size: 0.9rem;">
+                            ${analysis.inherited_changeable.length ? analysis.inherited_changeable.map(item => `<li>• ${item}</li>`).join('') : '<li>Aucun élément</li>'}
+                        </ul>
+                    </div>
+                    <div style="background: #f8f9fa; border-radius: 10px; padding: 1rem; border-left: 4px solid #6c757d;">
+                        <h4 style="margin-bottom: 0.5rem; color: #383d41;">Créé + Passé fixe</h4>
+                        <ul style="list-style: none; font-size: 0.9rem;">
+                            ${analysis.created_fixed.length ? analysis.created_fixed.map(item => `<li>• ${item}</li>`).join('') : '<li>Aucun élément</li>'}
+                        </ul>
+                    </div>
+                    <div style="background: #d4edda; border-radius: 10px; padding: 1rem; border-left: 4px solid #28a745;">
+                        <h4 style="margin-bottom: 0.5rem; color: #155724;">🎯 Votre zone de pouvoir</h4>
+                        <ul style="list-style: none; font-size: 0.9rem;">
+                            ${analysis.created_actionable.length ? analysis.created_actionable.map(item => `<li><strong>• ${item}</strong></li>`).join('') : '<li>Aucun élément</li>'}
+                        </ul>
+                    </div>
+                </div>
+                <div style="background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%); border-radius: 15px; padding: 1.5rem; border-left: 4px solid #28a745;">
+                    <h4 style="color: #155724; margin-bottom: 1rem;">Vos 3 actions pour les 7 prochains jours</h4>
+                    ${analysis.actions.map((action, index) => `
+                        <div style="background: white; border-radius: 10px; padding: 1rem; margin-bottom: 0.5rem; border-left: 3px solid #28a745;">
+                            <strong>Action ${index + 1}:</strong> ${action}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            showPage('results-page');
+        }
+
+        // Initialisation
+        window.onload = function() {
+            testAPI();
+            
+            // Vérifier si déjà connecté
+            const token = localStorage.getItem('clarity_token');
+            if (token) {
+                currentUser = { token };
+                showDashboard();
             }
         };
-
-        // Composant principal
-        function App() {
-            const [currentView, setCurrentView] = useState('landing');
-            const [user, setUser] = useState(null);
-            const [error, setError] = useState('');
-            const [success, setSuccess] = useState('');
-
-            useEffect(() => {
-                const token = localStorage.getItem('clarity_token');
-                if (token) {
-                    setUser({ token });
-                    setCurrentView('dashboard');
-                }
-            }, []);
-
-            const handleAuth = async (token) => {
-                localStorage.setItem('clarity_token', token);
-                setUser({ token });
-                setCurrentView('dashboard');
-                setSuccess('Connexion réussie !');
-                setTimeout(() => setSuccess(''), 3000);
-            };
-
-            const handleLogout = () => {
-                localStorage.removeItem('clarity_token');
-                setUser(null);
-                setCurrentView('landing');
-            };
-
-            const showError = (message) => {
-                setError(message);
-                setTimeout(() => setError(''), 5000);
-            };
-
-            return (
-                <div className="app-container">
-                    <header className="header">
-                        <h1>Clarity</h1>
-                        {user && (
-                            <button className="logout-button" onClick={handleLogout}>
-                                Déconnexion
-                            </button>
-                        )}
-                    </header>
-
-                    <main className="main-content">
-                        <div className="card">
-                            {error && <div className="error-message">{error}</div>}
-                            {success && <div className="success-message">{success}</div>}
-
-                            {currentView === 'landing' && (
-                                <LandingPage onNavigate={setCurrentView} />
-                            )}
-
-                            {currentView === 'register' && (
-                                <RegisterForm 
-                                    onAuth={handleAuth} 
-                                    onNavigate={setCurrentView}
-                                    onError={showError}
-                                />
-                            )}
-
-                            {currentView === 'login' && (
-                                <LoginForm 
-                                    onAuth={handleAuth} 
-                                    onNavigate={setCurrentView}
-                                    onError={showError}
-                                />
-                            )}
-
-                            {currentView === 'dashboard' && user && (
-                                <Dashboard onNavigate={setCurrentView} onError={showError} />
-                            )}
-
-                            {currentView === 'new-session' && user && (
-                                <NewSession onNavigate={setCurrentView} onError={showError} />
-                            )}
-
-                            {currentView === 'session' && user && (
-                                <SessionFlow onNavigate={setCurrentView} onError={showError} />
-                            )}
-                        </div>
-                    </main>
-                </div>
-            );
-        }
-
-        // Page d'accueil
-        function LandingPage({ onNavigate }) {
-            return (
-                <div className="hero-section">
-                    <h1 className="hero-title">Sortez de l'impasse</h1>
-                    <p className="hero-subtitle">
-                        Retrouvez votre pouvoir d'action en distinguant ce que vous avez hérité 
-                        de ce que vous pouvez façonner
-                    </p>
-                    <button 
-                        className="cta-button"
-                        onClick={() => onNavigate('register')}
-                    >
-                        Commencer maintenant
-                    </button>
-                    <p style={{ marginTop: '1rem', color: '#666' }}>
-                        Déjà inscrit ? 
-                        <button 
-                            style={{ background: 'none', border: 'none', color: '#667eea', textDecoration: 'underline', cursor: 'pointer', marginLeft: '0.5rem' }}
-                            onClick={() => onNavigate('login')}
-                        >
-                            Se connecter
-                        </button>
-                    </p>
-                </div>
-            );
-        }
-
-        // Formulaire d'inscription
-        function RegisterForm({ onAuth, onNavigate, onError }) {
-            const [email, setEmail] = useState('');
-            const [password, setPassword] = useState('');
-            const [loading, setLoading] = useState(false);
-
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                setLoading(true);
-
-                try {
-                    const response = await api.register(email, password);
-                    onAuth(response.access_token);
-                } catch (error) {
-                    onError(error.message);
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            return (
-                <div className="form-container">
-                    <h2 style={{ textAlign: 'center', marginBottom: '2rem', color: '#333' }}>
-                        Créer votre compte
-                    </h2>
-                    
-                    <form onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label className="form-label">Email</label>
-                            <input
-                                type="email"
-                                className="form-input"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                placeholder="votre@email.com"
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label className="form-label">Mot de passe</label>
-                            <input
-                                type="password"
-                                className="form-input"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                                placeholder="Minimum 6 caractères"
-                                minLength="6"
-                            />
-                        </div>
-
-                        <button 
-                            type="submit" 
-                            className="submit-button"
-                            disabled={loading}
-                        >
-                            {loading ? 'Création...' : 'Créer mon compte'}
-                        </button>
-                    </form>
-
-                    <p style={{ textAlign: 'center', marginTop: '1rem', color: '#666' }}>
-                        Déjà inscrit ? 
-                        <button 
-                            style={{ background: 'none', border: 'none', color: '#667eea', textDecoration: 'underline', cursor: 'pointer', marginLeft: '0.5rem' }}
-                            onClick={() => onNavigate('login')}
-                        >
-                            Se connecter
-                        </button>
-                    </p>
-                </div>
-            );
-        }
-
-        // Formulaire de connexion
-        function LoginForm({ onAuth, onNavigate, onError }) {
-            const [email, setEmail] = useState('');
-            const [password, setPassword] = useState('');
-            const [loading, setLoading] = useState(false);
-
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                setLoading(true);
-
-                try {
-                    const response = await api.login(email, password);
-                    onAuth(response.access_token);
-                } catch (error) {
-                    onError(error.message);
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            return (
-                <div className="form-container">
-                    <h2 style={{ textAlign: 'center', marginBottom: '2rem', color: '#333' }}>
-                        Connexion
-                    </h2>
-                    
-                    <form onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label className="form-label">Email</label>
-                            <input
-                                type="email"
-                                className="form-input"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                placeholder="votre@email.com"
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label className="form-label">Mot de passe</label>
-                            <input
-                                type="password"
-                                className="form-input"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                                placeholder="Votre mot de passe"
-                            />
-                        </div>
-
-                        <button 
-                            type="submit" 
-                            className="submit-button"
-                            disabled={loading}
-                        >
-                            {loading ? 'Connexion...' : 'Se connecter'}
-                        </button>
-                    </form>
-
-                    <p style={{ textAlign: 'center', marginTop: '1rem', color: '#666' }}>
-                        Pas encore inscrit ? 
-                        <button 
-                            style={{ background: 'none', border: 'none', color: '#667eea', textDecoration: 'underline', cursor: 'pointer', marginLeft: '0.5rem' }}
-                            onClick={() => onNavigate('register')}
-                        >
-                            Créer un compte
-                        </button>
-                    </p>
-                </div>
-            );
-        }
-
-        // Dashboard principal
-        function Dashboard({ onNavigate, onError }) {
-            const [sessions, setSessions] = useState([]);
-            const [loading, setLoading] = useState(true);
-
-            useEffect(() => {
-                loadHistory();
-            }, []);
-
-            const loadHistory = async () => {
-                try {
-                    const response = await api.getHistory();
-                    setSessions(response.sessions);
-                } catch (error) {
-                    onError('Erreur lors du chargement de l\'historique');
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            const formatDate = (dateString) => {
-                return new Date(dateString).toLocaleDateString('fr-FR', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-            };
-
-            return (
-                <div className="dashboard">
-                    <h2 className="dashboard-title">Votre tableau de bord</h2>
-                    
-                    <button 
-                        className="cta-button"
-                        onClick={() => onNavigate('new-session')}
-                        style={{ marginBottom: '2rem' }}
-                    >
-                        Nouvelle session
-                    </button>
-
-                    {loading ? (
-                        <p>Chargement...</p>
-                    ) : sessions.length === 0 ? (
-                        <div style={{ textAlign: 'center', color: '#666', padding: '2rem' }}>
-                            <p>Aucune session pour le moment.</p>
-                            <p>Commencez votre première analyse !</p>
-                        </div>
-                    ) : (
-                        <div>
-                            <h3 style={{ marginBottom: '1rem', textAlign: 'left' }}>Vos sessions</h3>
-                            {sessions.map(session => (
-                                <div key={session.id} className="session-card">
-                                    <div className="session-title">{session.title}</div>
-                                    <div className={`session-status ${session.status === 'completed' ? 'status-completed' : 'status-progress'}`}>
-                                        {session.status === 'completed' ? '✓ Terminée' : '⏳ En cours'}
-                                    </div>
-                                    <div style={{ fontSize: '0.8rem', color: '#999', marginTop: '0.5rem' }}>
-                                        {formatDate(session.created_at)}
-                                    </div>
-                                    
-                                    {session.analysis && (
-                                        <SessionResults analysis={session.analysis} />
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            );
-        }
-
-        // Nouvelle session
-        function NewSession({ onNavigate, onError }) {
-            const [problemDescription, setProblemDescription] = useState('');
-            const [loading, setLoading] = useState(false);
-
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                if (problemDescription.trim().length < 10) {
-                    onError('Veuillez décrire votre situation plus en détail (minimum 10 caractères)');
-                    return;
-                }
-
-                setLoading(true);
-                try {
-                    const response = await api.startSession(problemDescription);
-                    // Stocker les données de session dans le sessionStorage pour la suite
-                    sessionStorage.setItem('currentSession', JSON.stringify({
-                        sessionId: response.session_id,
-                        questions: response.questions,
-                        currentQuestionIndex: 0,
-                        responses: []
-                    }));
-                    onNavigate('session');
-                } catch (error) {
-                    onError(error.message);
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            return (
-                <div>
-                    <button 
-                        className="back-button"
-                        onClick={() => onNavigate('dashboard')}
-                    >
-                        ← Retour
-                    </button>
-
-                    <h2 style={{ textAlign: 'center', marginBottom: '2rem', color: '#333' }}>
-                        Nouvelle session de clarification
-                    </h2>
-
-                    <form onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label className="form-label">
-                                Décrivez la situation qui vous préoccupe
-                            </label>
-                            <textarea
-                                className="form-textarea"
-                                value={problemDescription}
-                                onChange={(e) => setProblemDescription(e.target.value)}
-                                placeholder="Exemple : Je n'arrive pas à garder un copain plus de 3 mois, je me sens toujours rejeté après quelques semaines..."
-                                required
-                                minLength="10"
-                            />
-                            <small style={{ color: '#666', fontSize: '0.9rem' }}>
-                                Soyez le plus précis possible, cela m'aidera à vous poser les bonnes questions.
-                            </small>
-                        </div>
-
-                        <button 
-                            type="submit" 
-                            className="submit-button"
-                            disabled={loading}
-                        >
-                            {loading ? 'Analyse en cours...' : 'Commencer l\'analyse'}
-                        </button>
-                    </form>
-                </div>
-            );
-        }
-
-        // Parcours de session avec questions
-        function SessionFlow({ onNavigate, onError }) {
-            const [sessionData, setSessionData] = useState(null);
-            const [currentResponse, setCurrentResponse] = useState('');
-            const [loading, setLoading] = useState(false);
-            const [analysis, setAnalysis] = useState(null);
-
-            useEffect(() => {
-                const stored = sessionStorage.getItem('currentSession');
-                if (stored) {
-                    setSessionData(JSON.parse(stored));
-                } else {
-                    onNavigate('dashboard');
-                }
-            }, []);
-
-            const handleResponseSubmit = async (e) => {
-                e.preventDefault();
-                if (!currentResponse.trim()) {
-                    onError('Veuillez répondre à la question');
-                    return;
-                }
-
-                setLoading(true);
-                try {
-                    const currentQuestion = sessionData.questions[sessionData.currentQuestionIndex];
-                    
-                    await api.respondToQuestion(
-                        sessionData.sessionId,
-                        currentQuestion.key,
-                        currentResponse
-                    );
-
-                    const newResponses = [...sessionData.responses, {
-                        questionKey: currentQuestion.key,
-                        response: currentResponse
-                    }];
-
-                    const newQuestionIndex = sessionData.currentQuestionIndex + 1;
-
-                    if (newQuestionIndex >= sessionData.questions.length) {
-                        // Toutes les questions sont terminées, compléter la session
-                        const analysisResponse = await api.completeSession(sessionData.sessionId);
-                        setAnalysis(analysisResponse.analysis);
-                        sessionStorage.removeItem('currentSession');
-                    } else {
-                        // Passer à la question suivante
-                        const updatedSession = {
-                            ...sessionData,
-                            currentQuestionIndex: newQuestionIndex,
-                            responses: newResponses
-                        };
-                        setSessionData(updatedSession);
-                        sessionStorage.setItem('currentSession', JSON.stringify(updatedSession));
-                        setCurrentResponse('');
-                    }
-                } catch (error) {
-                    onError(error.message);
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            if (!sessionData) return <div>Chargement...</div>;
-
-            if (analysis) {
-                return (
-                    <div>
-                        <h2 style={{ textAlign: 'center', marginBottom: '2rem', color: '#333' }}>
-                            Votre analyse personnalisée
-                        </h2>
-                        
-                        <SessionResults analysis={analysis} />
-                        
-                        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-                            <button 
-                                className="cta-button"
-                                onClick={() => onNavigate('dashboard')}
-                            >
-                                Retour au tableau de bord
-                            </button>
-                        </div>
-                    </div>
-                );
-            }
-
-            const currentQuestion = sessionData.questions[sessionData.currentQuestionIndex];
-            const progress = ((sessionData.currentQuestionIndex + 1) / sessionData.questions.length) * 100;
-
-            return (
-                <div>
-                    <button 
-                        className="back-button"
-                        onClick={() => onNavigate('dashboard')}
-                    >
-                        ← Annuler
-                    </button>
-
-                    <div className="question-counter">
-                        Question {sessionData.currentQuestionIndex + 1} sur {sessionData.questions.length}
-                    </div>
-
-                    <div style={{ 
-                        background: '#e0e8ff', 
-                        height: '4px', 
-                        borderRadius: '2px', 
-                        marginBottom: '2rem',
-                        overflow: 'hidden'
-                    }}>
-                        <div style={{ 
-                            background: '#667eea', 
-                            height: '100%', 
-                            width: `${progress}%`,
-                            transition: 'width 0.3s ease'
-                        }}></div>
-                    </div>
-
-                    <form onSubmit={handleResponseSubmit}>
-                        <div className="question-container">
-                            <h3 className="question-title">{currentQuestion.text}</h3>
-                            
-                            <div className="form-group">
-                                <textarea
-                                    className="form-textarea"
-                                    value={currentResponse}
-                                    onChange={(e) => setCurrentResponse(e.target.value)}
-                                    placeholder="Votre réponse..."
-                                    required
-                                    style={{ minHeight: '100px' }}
-                                />
-                            </div>
-                        </div>
-
-                        <button 
-                            type="submit" 
-                            className="submit-button"
-                            disabled={loading}
-                        >
-                            {loading ? 'En cours...' : 
-                             sessionData.currentQuestionIndex === sessionData.questions.length - 1 ? 
-                             'Terminer l\'analyse' : 'Question suivante'}
-                        </button>
-                    </form>
-                </div>
-            );
-        }
-
-        // Composant pour afficher les résultats
-        function SessionResults({ analysis }) {
-            return (
-                <div style={{ textAlign: 'left' }}>
-                    <div className="matrix">
-                        <div className="matrix-quadrant quadrant-1">
-                            <div className="quadrant-title">Hérité + Non changeable</div>
-                            <ul className="quadrant-items">
-                                {analysis.inherited_fixed.length === 0 ? (
-                                    <li>Aucun élément identifié</li>
-                                ) : (
-                                    analysis.inherited_fixed.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))
-                                )}
-                            </ul>
-                        </div>
-
-                        <div className="matrix-quadrant quadrant-2">
-                            <div className="quadrant-title">Hérité + Transformable</div>
-                            <ul className="quadrant-items">
-                                {analysis.inherited_changeable.length === 0 ? (
-                                    <li>Aucun élément identifié</li>
-                                ) : (
-                                    analysis.inherited_changeable.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))
-                                )}
-                            </ul>
-                        </div>
-
-                        <div className="matrix-quadrant quadrant-3">
-                            <div className="quadrant-title">Créé + Passé fixe</div>
-                            <ul className="quadrant-items">
-                                {analysis.created_fixed.length === 0 ? (
-                                    <li>Aucun élément identifié</li>
-                                ) : (
-                                    analysis.created_fixed.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))
-                                )}
-                            </ul>
-                        </div>
-
-                        <div className="matrix-quadrant quadrant-4">
-                            <div className="quadrant-title">🎯 Votre zone de pouvoir</div>
-                            <ul className="quadrant-items">
-                                {analysis.created_actionable.length === 0 ? (
-                                    <li>Aucun élément identifié</li>
-                                ) : (
-                                    analysis.created_actionable.map((item, index) => (
-                                        <li key={index}><strong>{item}</strong></li>
-                                    ))
-                                )}
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div className="actions-section">
-                        <h4 className="actions-title">Vos 3 actions pour les 7 prochains jours</h4>
-                        {analysis.actions.map((action, index) => (
-                            <div key={index} className="action-item">
-                                <strong>Action {index + 1}:</strong> {action}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            );
-        }
-
-        // Rendu de l'application
-        ReactDOM.render(<App />, document.getElementById('root'));
     </script>
 </body>
 </html>
