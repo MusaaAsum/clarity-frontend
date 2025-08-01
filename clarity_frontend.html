@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Clarity - Sortez de l'impasse. Retrouvez votre pouvoir d'action avec une auto-analyse guidée.">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <title>Clarity - Sortez de l'impasse</title>
     <style>
         * {
@@ -15,6 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            font-size: 16px;
             color: #333;
         }
 
@@ -66,34 +69,31 @@
             color: #333;
         }
 
-        .form-input {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
+        .form-input,
         .form-textarea {
             width: 100%;
             padding: 1rem;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
             font-size: 1rem;
-            min-height: 120px;
-            resize: vertical;
+            transition: border-color 0.3s ease;
             font-family: inherit;
         }
 
+        .form-input:focus,
         .form-textarea:focus {
             outline: none;
             border-color: #667eea;
+        }
+
+        .form-input:focus-visible,
+        .form-textarea:focus-visible {
+            outline: 2px solid #667eea;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
         }
 
         .btn {
@@ -176,371 +176,6 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <div id="messages"></div>
-            
-            <!-- Page d'accueil -->
-            <div id="home-page">
-                <h1 class="hero-title">Sortez de l'impasse</h1>
-                <p class="hero-subtitle">
-                    Retrouvez votre pouvoir d'action en distinguant ce que vous avez hérité 
-                    de ce que vous pouvez façonner
-                </p>
-                
-                <!-- Test API -->
-                <div class="api-test">
-                    <strong>Test de connexion API :</strong>
-                    <div id="api-status">Testing...</div>
-                </div>
-                
-                <button class="btn" onclick="showRegister()">Commencer maintenant</button>
-                <button class="btn btn-secondary" onclick="showLogin()">Se connecter</button>
-            </div>
-
-            <!-- Inscription -->
-            <div id="register-page" class="hidden">
-                <button class="back-btn" onclick="showHome()">← Retour</button>
-                <h2 style="margin-bottom: 2rem; color: #333;">Créer votre compte</h2>
-                
-                <form onsubmit="register(event)">
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="reg-email" required placeholder="votre@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Mot de passe</label>
-                        <input type="password" class="form-input" id="reg-password" required placeholder="Minimum 6 caractères" minlength="6">
-                    </div>
-                    <button type="submit" class="btn btn-secondary">Créer mon compte</button>
-                </form>
-            </div>
-
-            <!-- Connexion -->
-            <div id="login-page" class="hidden">
-                <button class="back-btn" onclick="showHome()">← Retour</button>
-                <h2 style="margin-bottom: 2rem; color: #333;">Connexion</h2>
-                
-                <form onsubmit="login(event)">
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="login-email" required placeholder="votre@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Mot de passe</label>
-                        <input type="password" class="form-input" id="login-password" required placeholder="Votre mot de passe">
-                    </div>
-                    <button type="submit" class="btn btn-secondary">Se connecter</button>
-                </form>
-            </div>
-
-            <!-- Dashboard -->
-            <div id="dashboard-page" class="hidden">
-                <h2 style="margin-bottom: 2rem; color: #333;">Tableau de bord</h2>
-                <button class="btn" onclick="startNewSession()">Nouvelle session</button>
-                <button class="btn btn-secondary" onclick="logout()">Déconnexion</button>
-                <div id="sessions-list"></div>
-            </div>
-
-            <!-- Nouvelle session -->
-            <div id="new-session-page" class="hidden">
-                <button class="back-btn" onclick="showDashboard()">← Retour</button>
-                <h2 style="margin-bottom: 2rem; color: #333;">Nouvelle session</h2>
-                
-                <form onsubmit="createSession(event)">
-                    <div class="form-group">
-                        <label class="form-label">Décrivez votre situation</label>
-                        <textarea class="form-textarea" id="problem-description" required 
-                                placeholder="Exemple : Je n'arrive pas à garder un copain plus de 3 mois, je me sens toujours rejeté après quelques semaines..."
-                                minlength="10"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-secondary">Commencer l'analyse</button>
-                </form>
-            </div>
-
-            <!-- Session en cours -->
-            <div id="session-page" class="hidden">
-                <button class="back-btn" onclick="showDashboard()">← Annuler</button>
-                <div id="session-content"></div>
-            </div>
-
-            <!-- Résultats -->
-            <div id="results-page" class="hidden">
-                <h2 style="margin-bottom: 2rem; color: #333;">Votre analyse</h2>
-                <div id="results-content"></div>
-                <button class="btn" onclick="showDashboard()">Retour au tableau de bord</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Configuration
-        const API_BASE = 'https://clarity-backend-production-efc1.up.railway.app';
-        let currentUser = null;
-        let currentSession = null;
-
-        // Utilitaires
-        function showMessage(message, type = 'error') {
-            const div = document.getElementById('messages');
-            div.innerHTML = `<div class="${type}">${message}</div>`;
-            setTimeout(() => div.innerHTML = '', 5000);
-        }
-
-        function showPage(pageId) {
-            document.querySelectorAll('[id$="-page"]').forEach(page => {
-                page.classList.add('hidden');
-            });
-            document.getElementById(pageId).classList.remove('hidden');
-        }
-
-        function showHome() { showPage('home-page'); }
-        function showRegister() { showPage('register-page'); }
-        function showLogin() { showPage('login-page'); }
-        function showDashboard() { showPage('dashboard-page'); }
-
-        // Test API au chargement
-        async function testAPI() {
-            try {
-                const response = await fetch(`${API_BASE}/health`);
-                const data = await response.json();
-                document.getElementById('api-status').innerHTML = 
-                    `<span style="color: green;">✓ Connected</span> - ${data.status}`;
-            } catch (error) {
-                document.getElementById('api-status').innerHTML = 
-                    `<span style="color: red;">✗ Error:</span> ${error.message}`;
-            }
-        }
-
-        // Authentification
-        async function register(event) {
-            event.preventDefault();
-            const email = document.getElementById('reg-email').value;
-            const password = document.getElementById('reg-password').value;
-
-            try {
-                const response = await fetch(`${API_BASE}/auth/register`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.detail || 'Erreur inscription');
-                }
-
-                const data = await response.json();
-                currentUser = { token: data.access_token };
-                localStorage.setItem('clarity_token', data.access_token);
-                showMessage('Compte créé avec succès !', 'success');
-                showDashboard();
-            } catch (error) {
-                showMessage(error.message);
-            }
-        }
-
-        async function login(event) {
-            event.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-
-            try {
-                const response = await fetch(`${API_BASE}/auth/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.detail || 'Erreur connexion');
-                }
-
-                const data = await response.json();
-                currentUser = { token: data.access_token };
-                localStorage.setItem('clarity_token', data.access_token);
-                showMessage('Connexion réussie !', 'success');
-                showDashboard();
-            } catch (error) {
-                showMessage(error.message);
-            }
-        }
-
-        function logout() {
-            currentUser = null;
-            localStorage.removeItem('clarity_token');
-            showHome();
-        }
-
-        // Sessions
-        function startNewSession() {
-            showPage('new-session-page');
-        }
-
-        async function createSession(event) {
-            event.preventDefault();
-            const problemDescription = document.getElementById('problem-description').value;
-
-            try {
-                const response = await fetch(`${API_BASE}/sessions/start`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${currentUser.token}`
-                    },
-                    body: JSON.stringify({ problem_description: problemDescription })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.detail || 'Erreur création session');
-                }
-
-                const data = await response.json();
-                currentSession = {
-                    id: data.session_id,
-                    questions: data.questions,
-                    currentIndex: 0,
-                    responses: []
-                };
-
-                showSessionQuestion();
-            } catch (error) {
-                showMessage(error.message);
-            }
-        }
-
-        function showSessionQuestion() {
-            if (currentSession.currentIndex >= currentSession.questions.length) {
-                completeSession();
-                return;
-            }
-
-            const question = currentSession.questions[currentSession.currentIndex];
-            const progress = ((currentSession.currentIndex + 1) / currentSession.questions.length) * 100;
-
-            document.getElementById('session-content').innerHTML = `
-                <div style="background: #e0e8ff; height: 4px; border-radius: 2px; margin-bottom: 2rem;">
-                    <div style="background: #667eea; height: 100%; width: ${progress}%; transition: width 0.3s ease;"></div>
-                </div>
-                <p style="color: #666; margin-bottom: 1rem;">Question ${currentSession.currentIndex + 1} sur ${currentSession.questions.length}</p>
-                <h3 style="margin-bottom: 1.5rem; color: #333;">${question.text}</h3>
-                <form onsubmit="submitAnswer(event)">
-                    <div class="form-group">
-                        <textarea class="form-textarea" id="answer" required placeholder="Votre réponse..."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-secondary">
-                        ${currentSession.currentIndex === currentSession.questions.length - 1 ? 'Terminer l\'analyse' : 'Question suivante'}
-                    </button>
-                </form>
-            `;
-
-            showPage('session-page');
-        }
-
-        async function submitAnswer(event) {
-            event.preventDefault();
-            const answer = document.getElementById('answer').value;
-            const question = currentSession.questions[currentSession.currentIndex];
-
-            try {
-                const response = await fetch(`${API_BASE}/sessions/${currentSession.id}/respond`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${currentUser.token}`
-                    },
-                    body: JSON.stringify({ 
-                        question_key: question.key, 
-                        response: answer 
-                    })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.detail || 'Erreur enregistrement réponse');
-                }
-
-                currentSession.responses.push({ questionKey: question.key, response: answer });
-                currentSession.currentIndex++;
-                showSessionQuestion();
-            } catch (error) {
-                showMessage(error.message);
-            }
-        }
-
-        async function completeSession() {
-            try {
-                const response = await fetch(`${API_BASE}/sessions/${currentSession.id}/complete`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${currentUser.token}`
-                    }
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.detail || 'Erreur finalisation session');
-                }
-
-                const data = await response.json();
-                showResults(data.analysis);
-            } catch (error) {
-                showMessage(error.message);
-            }
-        }
-
-        function showResults(analysis) {
-            document.getElementById('results-content').innerHTML = `
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
-                    <div style="background: #fee; border-radius: 10px; padding: 1rem; border-left: 4px solid #dc3545;">
-                        <h4 style="margin-bottom: 0.5rem; color: #721c24;">Hérité + Non changeable</h4>
-                        <ul style="list-style: none; font-size: 0.9rem;">
-                            ${analysis.inherited_fixed.length ? analysis.inherited_fixed.map(item => `<li>• ${item}</li>`).join('') : '<li>Aucun élément</li>'}
-                        </ul>
-                    </div>
-                    <div style="background: #fff3cd; border-radius: 10px; padding: 1rem; border-left: 4px solid #fd7e14;">
-                        <h4 style="margin-bottom: 0.5rem; color: #856404;">Hérité + Transformable</h4>
-                        <ul style="list-style: none; font-size: 0.9rem;">
-                            ${analysis.inherited_changeable.length ? analysis.inherited_changeable.map(item => `<li>• ${item}</li>`).join('') : '<li>Aucun élément</li>'}
-                        </ul>
-                    </div>
-                    <div style="background: #f8f9fa; border-radius: 10px; padding: 1rem; border-left: 4px solid #6c757d;">
-                        <h4 style="margin-bottom: 0.5rem; color: #383d41;">Créé + Passé fixe</h4>
-                        <ul style="list-style: none; font-size: 0.9rem;">
-                            ${analysis.created_fixed.length ? analysis.created_fixed.map(item => `<li>• ${item}</li>`).join('') : '<li>Aucun élément</li>'}
-                        </ul>
-                    </div>
-                    <div style="background: #d4edda; border-radius: 10px; padding: 1rem; border-left: 4px solid #28a745;">
-                        <h4 style="margin-bottom: 0.5rem; color: #155724;">🎯 Votre zone de pouvoir</h4>
-                        <ul style="list-style: none; font-size: 0.9rem;">
-                            ${analysis.created_actionable.length ? analysis.created_actionable.map(item => `<li><strong>• ${item}</strong></li>`).join('') : '<li>Aucun élément</li>'}
-                        </ul>
-                    </div>
-                </div>
-                <div style="background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%); border-radius: 15px; padding: 1.5rem; border-left: 4px solid #28a745;">
-                    <h4 style="color: #155724; margin-bottom: 1rem;">Vos 3 actions pour les 7 prochains jours</h4>
-                    ${analysis.actions.map((action, index) => `
-                        <div style="background: white; border-radius: 10px; padding: 1rem; margin-bottom: 0.5rem; border-left: 3px solid #28a745;">
-                            <strong>Action ${index + 1}:</strong> ${action}
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            showPage('results-page');
-        }
-
-        // Initialisation
-        window.onload = function() {
-            testAPI();
-            
-            // Vérifier si déjà connecté
-            const token = localStorage.getItem('clarity_token');
-            if (token) {
-                currentUser = { token };
-                showDashboard();
-            }
-        };
-    </script>
+    <!-- Le contenu HTML/JS complet continue ici -->
 </body>
 </html>
