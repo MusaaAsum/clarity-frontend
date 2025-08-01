@@ -1,5 +1,0 @@
-[phases.build]
-cmds = ["echo 'No build needed for static site'"]
-
-[phases.start]
-cmd = "python3 -m http.server $PORT"
